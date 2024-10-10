@@ -33,20 +33,19 @@ class userLibrary {
     }
 
     rl.question(
-      "Which field do you want to remove? (username, Email, street, age, phone, address)\n",
+      "Which field do you want to remove? (username, Email, fullName, age, phone, address)\n",
       (field) => {
         if (
-          ["username", "Email", "street", "age", "phone"].includes(field)
+          ["username", "Email", "fullName", "age", "phone"].includes(field)
         ) {
           user[field] = "";
           console.log(`Field '${field}' has been removed from user '${username}'.`);
         } else if (field === "address") {
           rl.question(
-            "Which address field do you want to remove? (name, street, city, postalcode)\n",
+            "Which address field do you want to remove? (street, city, postalcode)\n",
             (addressField) => {
               if (
                 [
-                  "name",
                   "street",
                   "city",
                   "postalcode",
@@ -103,14 +102,13 @@ class userLibrary {
         console.log(`\nuser ${index + 1}:`);
         console.log(`username: ${user.username}`);
         console.log(`Email: ${user.Email}`);
-        console.log(`street: ${user.street}`);
+        console.log(`fullName: ${user.fullName}`);
         console.log(`age: ${user.age}`);
         console.log(`phone: ${user.phone}`);
         console.log("address:");
-        console.log(`  - address name: ${user.address.name}`);
         console.log(`  - street: ${user.address.street}`);
-        console.log(`  - address Email: ${user.address.city}`);
-        console.log(`  - address Phone: ${user.address.postalcode}`);
+        console.log(`  - address city: ${user.address.city}`);
+        console.log(`  - address postalCode: ${user.address.postalcode}`);
       });
     }
   }
@@ -120,13 +118,12 @@ class userLibrary {
     const requiredFields = [
       "username",
       "Email",
-      "street",
+      "fullName",
       "age",
       "phone",
       "address",
     ];
     const requiredaddressFields = [
-      "name",
       "street",
       "city",
       "postalcode",
@@ -171,9 +168,9 @@ function updateuserFromInput(username) {
         if (newEmail) updatedFields.Email = newEmail;
 
         rl.question(
-          "Enter new user street (or leave empty to skip): ",
-          (newstreet) => {
-            if (newstreet) updatedFields.street = newstreet;
+          "Enter new user fullName (or leave empty to skip): ",
+          (newfullName) => {
+            if (newfullName) updatedFields.fullName = newfullName;
 
             rl.question(
               "Enter new user age (or leave empty to skip): ",
@@ -186,31 +183,24 @@ function updateuserFromInput(username) {
                     if (newphone) updatedFields.phone = newphone;
 
                     rl.question(
-                      "Enter new address name (or leave empty to skip): ",
+                      "Enter new address street (or leave empty to skip): ",
                       (newaddressName) => {
-                        if (newaddressName)
-                          updatedFields.address.name = newaddressName;
+                        if (newaddressStreet)
+                          updatedFields.address.street = newaddressStreet;
 
                         rl.question(
-                          "Enter new street (or leave empty to skip): ",
-                          (newaddressstreet) => {
-                            if (newaddressstreet)
-                              updatedFields.address.street =
-                                newaddressstreet;
+                          "Enter new City (or leave empty to skip): ",
+                          (newcity) => {
+                            if (newcity)
+                              updatedFields.address.city =
+                            newcity;
 
                             rl.question(
-                              "Enter new address  (or leave empty to skip): ",
-                              (newcity) => {
-                                if (newcity)
-                                  updatedFields.address.city =
-                                    newcity;
-
-                                rl.question(
-                                  "Enter new address postal code (or leave empty to skip): ",
-                                  (newpostalcode) => {
-                                    if (newpostalcode)
-                                      updatedFields.address.postalcode =
-                                        newpostalcode;
+                              "Enter new address  postal code (or leave empty to skip): ",
+                              (newpostalcode) => {
+                                if (newpostalcode)
+                                  updatedFields.address.postalcode =
+                                  newpostalcode;
 
                                     // Only update the fields that have been provided
                                     const currentuser = userLib.users.find(
@@ -265,7 +255,6 @@ function updateuserFromInput(username) {
         );
       }
     );
-  });
 }
 
 // Menu function for user choice
@@ -354,11 +343,11 @@ function adduserFromInput() {
   rl.question("Enter user username: ", (username) => {
     user.username = username;
 
-    rl.question("Enter user Email : ", (Email) => {
+    rl.question("Enter  user Email : ", (Email) => {
       user.Email = Email;
 
-      rl.question("Enter user street: ", (street) => {
-        user.street = street;
+      rl.question("Enter user fullName: ", (fullName) => {
+        user.fullName = fullName;
 
         rl.question("Enter user age: ", (age) => {
           user.age = age;
@@ -366,16 +355,11 @@ function adduserFromInput() {
           rl.question("Enter user phone: ", (phone) => {
             user.phone = phone;
 
-            rl.question("Enter address name: ", (addressName) => {
-              user.address.name = addressName;
-
-              rl.question(
-                "Enter street: ",
-                (addressstreet) => {
-                  user.address.street = addressstreet;
+            rl.question("Enter address street: ", (addressStreet) => {
+              user.address.street = addressStreet;
 
                   rl.question(
-                    "Enter address : ",
+                    "Enter address city : ",
                     (city) => {
                       user.address.city = city;
 
@@ -400,7 +384,6 @@ function adduserFromInput() {
         });
       });
     });
-  });
 }
 
 // Start the user menu
